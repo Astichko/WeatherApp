@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="celsius"> \u2109</string>
+    <string name="condition">Condition</string>
+    <string name="location">Location</string>
+    <string name="temperature">Temperature</string>
+    <string name="open_weather_maps_app_id">11111</string>
+
+    <string name="weather_sunny">&#xf00d;</string>
+    <string name="weather_clear_night">&#xf02e;</string>
+
+    <string name="weather_foggy">&#xf014;</string>
+    <string name="weather_cloudy">&#xf013;</string>
+    <string name="weather_rainy">&#xf019;</string>
+    <string name="weather_snowy">&#xf01b;</string>
+    <string name="weather_thunder">&#xf01e;</string>
+    <string name="weather_drizzle">&#xf01c;</string>
+    <string name="h_pa">hPa</string>
+    <string name="cel">&#xf03c;</string>
+    <string name="na">Sorry, no weather data found.</string>
+    <string name="wind_pressure"><![CDATA[Wind & Pressure]]></string>
+    <string name="weather_map">Weather Map</string>
+    <string name="km_h">km/h</string>
+    <string name="title_activity_maps">Map</string>
+
+
 </resources>
