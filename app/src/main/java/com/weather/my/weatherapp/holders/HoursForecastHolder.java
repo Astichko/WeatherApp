@@ -6,10 +6,6 @@ import android.widget.TextView;
 
 import com.weather.my.weatherapp.R;
 
-/**
- * Created by 1 on 19.01.2017.
- */
-
 public class HoursForecastHolder extends RecyclerView.ViewHolder {
     public TextView hoursCondition;
     public TextView time;

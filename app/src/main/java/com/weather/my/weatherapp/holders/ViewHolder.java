@@ -7,15 +7,15 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.MapView;
 import com.weather.my.weatherapp.R;
 
 import java.util.ArrayList;
 
+import static com.weather.my.weatherapp.utils.Constants.FORECAST;
+import static com.weather.my.weatherapp.utils.Constants.HEADER;
+import static com.weather.my.weatherapp.utils.Constants.MAP;
+import static com.weather.my.weatherapp.utils.Constants.WIND;
 
-/**
- * Created by 1 on 05.01.2017.
- */
 
 public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -24,36 +24,42 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     public TextView minTemp;
     public TextView location;
     public RecyclerView hoursForecastRecycler;
-    public TextView dayOfWeek;
-    public TextView forecastCondition;
-    public TextView forecastTemp;
     public ImageView windPropellers;
     public ArrayList<TextView[]> forecastDayData;
     public ImageView windDirections;
     public TextView windSpeed;
-    public MapView mapView;
     public TextView pressure;
     public ConstraintLayout itemHeaderContainer;
     public WebView webView;
 
-
-    public ViewHolder(View itemView) {
+    public ViewHolder(View itemView, int viewType) {
         super(itemView);
-        temp = (TextView) itemView.findViewById(R.id.temperature);
-        maxTemp = (TextView) itemView.findViewById(R.id.maxTemp);
-        minTemp = (TextView) itemView.findViewById(R.id.minTemp);
-        location = (TextView) itemView.findViewById(R.id.location);
-        windPropellers = (ImageView) itemView.findViewById(R.id.wind_propellers);
-        windDirections = (ImageView) itemView.findViewById(R.id.wind_direction);
-        windSpeed = (TextView) itemView.findViewById(R.id.wind_speed);
-//        mapView = (MapView) itemView.findViewById(R.id.map_view);
-        pressure = (TextView) itemView.findViewById(R.id.pressure);
-        itemHeaderContainer = (ConstraintLayout) itemView.findViewById(R.id.item_header);
-        webView = (WebView) itemView.findViewById(R.id.web_view);
-        View frame = itemView.findViewById(R.id.element1);
-        if (frame != null) {
-            findForecastViews(R.id.element1, R.id.element2, R.id.element3, R.id.element4, R.id.element5);
-            hoursForecastRecycler = (RecyclerView) itemView.findViewById(R.id.hours_forecast_recycler);
+        findViews(viewType);
+    }
+
+    public void findViews(int viewType) {
+        if (viewType == HEADER) {
+            itemHeaderContainer = (ConstraintLayout) itemView.findViewById(R.id.main_layout);
+            temp = (TextView) itemView.findViewById(R.id.temperature);
+            maxTemp = (TextView) itemView.findViewById(R.id.maxTemp);
+            minTemp = (TextView) itemView.findViewById(R.id.minTemp);
+            location = (TextView) itemView.findViewById(R.id.location);
+        }
+        if (viewType == WIND) {
+            windPropellers = (ImageView) itemView.findViewById(R.id.wind_propellers);
+            windDirections = (ImageView) itemView.findViewById(R.id.wind_direction);
+            windSpeed = (TextView) itemView.findViewById(R.id.wind_speed);
+            pressure = (TextView) itemView.findViewById(R.id.pressure);
+        }
+        if (viewType == MAP) {
+            webView = (WebView) itemView.findViewById(R.id.web_view);
+        }
+        if (viewType == FORECAST) {
+            View frame = itemView.findViewById(R.id.element1);
+            if (frame != null) {
+                findForecastViews(R.id.element1, R.id.element2, R.id.element3, R.id.element4, R.id.element5);
+                hoursForecastRecycler = (RecyclerView) itemView.findViewById(R.id.hours_forecast_recycler);
+            }
         }
     }
 

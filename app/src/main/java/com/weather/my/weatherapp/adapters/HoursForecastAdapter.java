@@ -3,7 +3,6 @@ package com.weather.my.weatherapp.adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,10 @@ import com.weather.my.weatherapp.holders.HoursForecastHolder;
 import com.weather.my.weatherapp.models.forecast_hours.HoursForecast;
 import com.weather.my.weatherapp.providers.DataProvider;
 
-import static com.weather.my.weatherapp.Constants.RESOURCE_PREFIX;
+import static com.weather.my.weatherapp.utils.Constants.DEG;
+import static com.weather.my.weatherapp.utils.Constants.FONT_PATH;
+import static com.weather.my.weatherapp.utils.Constants.RESOURCE_PREFIX;
 
-/**
- * Created by 1 on 18.01.2017.
- */
 
 public class HoursForecastAdapter extends RecyclerView.Adapter<HoursForecastHolder> {
 
@@ -26,7 +24,6 @@ public class HoursForecastAdapter extends RecyclerView.Adapter<HoursForecastHold
     private String LOG = "hoursRecycler";
 
     public HoursForecastAdapter(Context context) {
-        Log.v(LOG, "HoursForecastAdapter is created");
         this.context = context;
     }
 
@@ -40,19 +37,12 @@ public class HoursForecastAdapter extends RecyclerView.Adapter<HoursForecastHold
     public void onBindViewHolder(HoursForecastHolder holder, int position) {//095834190 Max
         hoursForecast = DataProvider.getHoursForecast();
         String dateTime = hoursForecast.getList().get(position).getDtTxt();
-        Log.v(LOG, "HoursForecastAdapter day time is :" + dateTime);
-        Log.v(LOG, "HoursForecastAdapter formatted day time is :" + dateTime.substring(dateTime.length() - 7, dateTime.length() - 3));
         holder.time.setText(dateTime.substring(dateTime.length() - 8, dateTime.length() - 3));
-
-        Typeface weatherFont = Typeface.createFromAsset(context.getAssets(), "fonts/weather.ttf");
-//
+        Typeface weatherFont = Typeface.createFromAsset(context.getAssets(), FONT_PATH);
         holder.hoursCondition.setTypeface(weatherFont);
         holder.hoursCondition.setText(getStringResourceByName(RESOURCE_PREFIX
                 + hoursForecast.getList().get(position).getWeather().get(0).getId()));
-//        holder.hoursCondition.setText(getStringResourceByName("wi_owm_800"));
-////        holder.hoursCondition.setText(getStringResourceByName(RESOURCE_PREFIX
-////                + hoursForecast.getList().get(position).getWeather().get(0).getId()));
-        holder.hoursTemp.setText(String.valueOf(hoursForecast.getList().get(position).getMain().getTemp().intValue())+ "\u00B0");
+        holder.hoursTemp.setText(String.valueOf(hoursForecast.getList().get(position).getMain().getTemp().intValue()) + DEG);
 
     }
 
@@ -61,9 +51,8 @@ public class HoursForecastAdapter extends RecyclerView.Adapter<HoursForecastHold
         return 9;
     }
 
-    private String getStringResourceByName(String aString) {//wi_owm_day_
+    private String getStringResourceByName(String aString) {
         String packageName = context.getPackageName();
-        Log.v(LOG, "Package name is: " + packageName);
         int resId = context.getResources().getIdentifier(aString, "string", packageName);
         return context.getString(resId);
     }

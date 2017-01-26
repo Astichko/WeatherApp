@@ -3,9 +3,10 @@ package com.weather.my.weatherapp.providers;
 import android.location.Location;
 import android.util.Log;
 
-import com.weather.my.weatherapp.apis.CurrentWeatherApi;
-import com.weather.my.weatherapp.apis.DaysForecastApi;
-import com.weather.my.weatherapp.apis.HoursForecastApi;
+import com.weather.my.weatherapp.interfaces.apis.CurrentWeatherApi;
+import com.weather.my.weatherapp.interfaces.apis.DaysForecastApi;
+import com.weather.my.weatherapp.interfaces.apis.HoursForecastApi;
+import com.weather.my.weatherapp.interfaces.listeners.OnWeatherReceivedListener;
 import com.weather.my.weatherapp.models.current_weather.CurrentWeather;
 import com.weather.my.weatherapp.models.forecast_days.DaysForecast;
 import com.weather.my.weatherapp.models.forecast_hours.HoursForecast;
@@ -37,20 +38,16 @@ public class WeatherDataProvider {
                     @Override
                     public void onNext(CurrentWeather currentWeather) {
                         transferWeather(currentWeather);
-//                        DataProvider.setCurrentWeather(currentWeather);
-//                        Log.v("LocationDataProvider", "New currentWeather received and set new info on condition textView");
-//                        condition.setText(currentWeather.getWeather().get(0).getDescription());
-//                        setWeatherIcon(currentWeather.getWeather().get(0).getId(), currentWeather.getSys().getSunrise(), currentWeather.getSys().getSunset());
                     }
 
                     @Override
                     public void onCompleted() {
-                        Log.v("mLogs", "Work completed in current weather!");
+                        Log.v(WDP_LOG, "Work completed in current weather!");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.v("mLog", e.toString());
+                        Log.v(WDP_LOG, e.toString());
                     }
                 });
     }
@@ -64,22 +61,17 @@ public class WeatherDataProvider {
                     @Override
                     public void onNext(DaysForecast daysForecast) {
                         transferWeather(daysForecast);
-//                        Log.v(MAIN_ACT_TAG, "Forecast days received: " + String.valueOf(daysForecast.getList().get(0).getWeather().get(0).getId()));
-//                        Toast.makeText(MainActivity.this, String.valueOf(daysForecast.getList().get(0).getWeather().get(0).getId()), Toast.LENGTH_LONG).show();
-//                        DataProvider.setDaysForecast(daysForecast);
-//                        fillRecycler();
-//                        setScrollListener();
                     }
 
                     @Override
                     public void onCompleted() {
-                        Log.v("mLogs", "Work completed in days forecast!");
+                        Log.v(WDP_LOG, "Work completed in days forecast!");
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        Log.v("mLogs", e.toString());
+                        Log.v(WDP_LOG, e.toString());
                     }
                 });
     }
@@ -93,20 +85,17 @@ public class WeatherDataProvider {
                     @Override
                     public void onNext(HoursForecast hoursForecast) {
                         transferWeather(hoursForecast);
-//                        Log.v(WDP_LOG, "Forecast hours received: " + String.valueOf(hoursForecast.getList().get(0).getMain().getTemp()));
-//                        Log.v(WDP_LOG, "Forecast hours received: " + String.valueOf(hoursForecast.getList().get(1).getMain().getTemp()));
-//                        DataProvider.setHoursForecast(hoursForecast);
                     }
 
                     @Override
                     public void onCompleted() {
-                        Log.v("mLogs", "Work completed in hours forecast!");
+                        Log.v(WDP_LOG, "Work completed in hours forecast!");
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        Log.v("mLogs", e.toString());
+                        Log.v(WDP_LOG, e.toString());
                     }
                 });
     }
@@ -116,11 +105,6 @@ public class WeatherDataProvider {
             arrayWeatherListeners = new ArrayList<>();
         }
         arrayWeatherListeners.add(weatherListener);
-    }
-
-    public interface OnWeatherReceivedListener {
-        public void onWeatherReceived(Object weatherData);
-
     }
 
     public static void transferWeather(Object weatherData) {

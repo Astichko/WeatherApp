@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_forecast"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/activity_horizontal_margin"
@@ -9,24 +9,23 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="Forecast"
+        android:text="@string/forecast"
         android:textColor="@android:color/white"
         android:textSize="@dimen/main_text_size" />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/title"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_weight="2.54"
         android:background="@android:color/white" />
 
     <android.support.v7.widget.RecyclerView
@@ -36,7 +35,7 @@
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/view"
+        android:layout_below="@+id/line"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_horizontal_margin" />
@@ -76,260 +75,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/element4" />
-
-
-    <!--<FrameLayout-->
-    <!--android:id="@+id/f1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/recHourForecast"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin">-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/dotLine1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="2dp"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layerType="software"-->
-    <!--android:src="@drawable/dotted" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/day1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="Saturday"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/condition1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="00"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/temp1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="end"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="-17"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--</FrameLayout>-->
-
-    <!--<FrameLayout-->
-    <!--android:id="@+id/f2"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/f1"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin">-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/dotLine2"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="2dp"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layerType="software"-->
-    <!--android:src="@drawable/dotted" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/day2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="Saturday"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/condition2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="00"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/temp2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="end"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="-17"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--</FrameLayout>-->
-
-    <!--<FrameLayout-->
-    <!--android:id="@+id/f3"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/f2"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin">-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/dotLine3"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="2dp"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layerType="software"-->
-    <!--android:src="@drawable/dotted" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/day3"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="Saturday"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/condition3"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="00"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/temp3"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="end"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="-17"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--</FrameLayout>-->
-
-    <!--<FrameLayout-->
-    <!--android:id="@+id/f4"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@+id/f3"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin">-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/dotLine4"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="2dp"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layerType="software"-->
-    <!--android:src="@drawable/dotted" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/day4"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="Saturday"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/condition4"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="00"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/temp4"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="end"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="-17"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--</FrameLayout>-->
-
-
-    <!--<FrameLayout-->
-    <!--android:id="@+id/f5"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="16dp"-->
-    <!--android:layout_below="@+id/f4"-->
-    <!--&gt;-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/dotLine5"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="2dp"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layerType="software"-->
-    <!--android:src="@drawable/dotted" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/day5"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="Saturday"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/condition5"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:layout_marginLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="00"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/temp5"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="end"-->
-    <!--android:layout_marginRight="@dimen/activity_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:text="-17"-->
-    <!--android:layout_marginBottom="@dimen/activity_horizontal_margin"-->
-    <!--android:textColor="@android:color/white"-->
-    <!--android:textSize="@dimen/main_text_size" />-->
-
-    <!--</FrameLayout>-->
-
 
 </RelativeLayout>

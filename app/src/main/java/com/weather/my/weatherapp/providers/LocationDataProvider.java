@@ -16,10 +16,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.weather.my.weatherapp.interfaces.listeners.OnLocationReceivedListener;
 
 import java.util.ArrayList;
 
-import static com.weather.my.weatherapp.Constants.REQUEST_PERMISSION_GPS;
+import static com.weather.my.weatherapp.utils.Constants.REQUEST_PERMISSION_GPS;
 
 /**
  * Created by 1 on 12.01.2017.
@@ -34,6 +35,8 @@ public class LocationDataProvider implements GoogleApiClient.ConnectionCallbacks
     private LocationRequest mLocationRequest;
     private Context context;
     public Location location;
+    private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
+    private long FASTEST_INTERVAL = 2000; /* 2 sec */
     public boolean isFirstLocationReceived = true;
 
     public LocationDataProvider(Context context) {
@@ -49,8 +52,8 @@ public class LocationDataProvider implements GoogleApiClient.ConnectionCallbacks
         //Location request
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(20 * 1000)        // 20 seconds, in milliseconds
-                .setFastestInterval(20 * 1000); // 20 second, in milliseconds
+                .setInterval(UPDATE_INTERVAL)        // 20 seconds, in milliseconds
+                .setFastestInterval(FASTEST_INTERVAL); // 20 second, in milliseconds
         //And Connect
         mGoogleApiClient.connect();
     }
@@ -78,7 +81,10 @@ public class LocationDataProvider implements GoogleApiClient.ConnectionCallbacks
             handleNewLocation(location);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
-//        Log.i(TAG, "Location services connected and location is:" + location.getLatitude() + " : " + location.getLongitude());
+    }
+
+    public void removeUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
     }
 
     @Override
@@ -99,9 +105,6 @@ public class LocationDataProvider implements GoogleApiClient.ConnectionCallbacks
             createHourRequest();
             isFirstLocationReceived = false;
         }
-//        createHourRequest();
-//        Toast.makeText(context, location.getLatitude() + " : " + location.getLongitude(), Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "LocationDataProvider in locationChanged is: " + location.getLatitude() + " : " + location.getLongitude());
     }
 
     public void createHourRequest() {
@@ -117,21 +120,15 @@ public class LocationDataProvider implements GoogleApiClient.ConnectionCallbacks
         //Location request
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(60 * 1000)        // 60 seconds, in milliseconds
-                .setFastestInterval(60 * 1000); // 60 second, in milliseconds
+                .setInterval(3600 * 1000)        // 60 seconds, in milliseconds
+                .setFastestInterval(3600 * 1000); // 60 second, in milliseconds
 
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
     private void handleNewLocation(Location location) {
         transferLocation(location);
-        Log.i(TAG, "Location in handleNewLocation is: " + location.getLatitude() + " : " + location.getLongitude());
     }
-
-    public interface OnLocationReceivedListener {
-        void onLocationReceived(Location location);
-    }
-
 
     public void setListener(OnLocationReceivedListener locationReceived) {
         if (arrayLocationReceivedListeners == null) {

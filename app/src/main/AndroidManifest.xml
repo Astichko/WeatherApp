@@ -22,20 +22,13 @@
 
         <activity
             android:name=".activities.MainActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Main2Activity" />
-        <activity
-            android:name=".activities.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

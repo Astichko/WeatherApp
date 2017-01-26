@@ -9,9 +9,6 @@ import android.view.View;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Created by 1 on 18.01.2017.
- */
 
 public class Utils {
 
@@ -47,6 +44,10 @@ public class Utils {
 //        return address.toString();
 
 
+    }
+
+    public static String getStringResources(Context context, int id){
+        return context.getResources().getString(id);
     }
 
     public static void setVisibility(int visibility, View... views) {
