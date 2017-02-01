@@ -10,23 +10,22 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.transitionseverywhere.Slide;
-import com.transitionseverywhere.Transition;
-import com.transitionseverywhere.TransitionManager;
 import com.weather.my.weatherapp.R;
 import com.weather.my.weatherapp.adapters.MainRecyclerAdapter;
+import com.weather.my.weatherapp.holders.ViewHolder;
 import com.weather.my.weatherapp.interfaces.listeners.OnLocationReceivedListener;
 import com.weather.my.weatherapp.interfaces.listeners.OnWeatherReceivedListener;
+import com.weather.my.weatherapp.layouts_mananger.PreCachingLayoutManager;
 import com.weather.my.weatherapp.models.current_weather.CurrentWeather;
 import com.weather.my.weatherapp.models.forecast_days.DaysForecast;
 import com.weather.my.weatherapp.models.forecast_hours.HoursForecast;
@@ -40,7 +39,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.weather.my.weatherapp.utils.Constants.ANIMATION_DURATION;
 import static com.weather.my.weatherapp.utils.Constants.FONT_PATH;
 import static com.weather.my.weatherapp.utils.Constants.MAX_TRANSPARENCY;
 import static com.weather.my.weatherapp.utils.Constants.REQUEST_PERMISSION_GPS;
@@ -108,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements
     public void setSwipeRefreshLayout() {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updateWeather(lastKnownLocation);
+            ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(0);
         });
         swipeRefreshLayout.setProgressViewOffset(false, 0, 50);
     }
@@ -145,10 +144,13 @@ public class MainActivity extends AppCompatActivity implements
             recyclerView = (RecyclerView) findViewById(R.id.recycler);
         }
         if (adapter == null) {
-            adapter = new MainRecyclerAdapter(getApplicationContext(), getSupportFragmentManager());
+            adapter = new MainRecyclerAdapter(getApplicationContext());
+
             recyclerView.setAdapter(adapter);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(linearLayoutManager);
+//            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            PreCachingLayoutManager layoutManager = new PreCachingLayoutManager(this);
+            layoutManager.setExtraLayoutSpace(1);
+            recyclerView.setLayoutManager(layoutManager);
             setScrollListener();
         } else {
             adapter.notifyDataSetChanged();
@@ -212,6 +214,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void updateWeather(Location location) {
+        if (location == null)
+            return;
         WeatherDataProvider.getCurrentWeather(location);
         WeatherDataProvider.getDaysForecast(location);
         WeatherDataProvider.getHoursForecast(location);
@@ -222,19 +226,19 @@ public class MainActivity extends AppCompatActivity implements
             typeWeatherReceived[0] = true;
             if (isAllWeatherReceived()) {
                 setUpRecyclers();
+                setAnimation();
+                resetArray();
                 swipeRefreshLayout.setRefreshing(false);
             }
-            CurrentWeather currentWeather = (CurrentWeather) weatherData;
-            condition.setText(currentWeather.getWeather().get(0).getDescription());
-            setWeatherIcon(currentWeather.getWeather().get(0).getId(),
-                    currentWeather.getSys().getSunrise(), currentWeather.getSys().getSunset());
-            DataProvider.setCurrentWeather((CurrentWeather) weatherData);
-            Log.v(LOG,"Current weather is set");
+            setConditions(weatherData);
+
         }
         if (weatherData instanceof DaysForecast) {
             typeWeatherReceived[1] = true;
             if (isAllWeatherReceived()) {
                 setUpRecyclers();
+                setAnimation();
+                resetArray();
                 swipeRefreshLayout.setRefreshing(false);
             }
             DataProvider.setDaysForecast((DaysForecast) weatherData);
@@ -243,21 +247,62 @@ public class MainActivity extends AppCompatActivity implements
             typeWeatherReceived[2] = true;
             if (isAllWeatherReceived()) {
                 setUpRecyclers();
+                setAnimation();
+                resetArray();
                 swipeRefreshLayout.setRefreshing(false);
             }
             DataProvider.setHoursForecast((HoursForecast) weatherData);
         }
     }
 
+    public void setConditions(Object weatherData) {
+        CurrentWeather currentWeather = (CurrentWeather) weatherData;
+        condition.setText(currentWeather.getWeather().get(0).getDescription());
+        setWeatherIcon(currentWeather.getWeather().get(0).getId(),
+                currentWeather.getSys().getSunrise(), currentWeather.getSys().getSunset());
+        DataProvider.setCurrentWeather((CurrentWeather) weatherData);
+
+        Log.v(LOG, "Current weather is set");
+    }
+
+    public void resetArray() {
+        typeWeatherReceived = new boolean[3];
+    }
+
     public void setUpRecyclers() {
         fillRecycler();
-        Transition wIconAnimation = new Slide(Gravity.RIGHT);
-        wIconAnimation.addTarget(wIcon);
-        wIconAnimation.addTarget(condition);
-        wIconAnimation.setDuration(ANIMATION_DURATION);
-        TransitionManager.beginDelayedTransition(mainContainer, wIconAnimation);
-        Utils.setVisibility(View.VISIBLE, condition, wIcon);
+        Utils.setVisibility(View.VISIBLE, swipeRefreshLayout);
+//        setAnimation();
+//        setRecyclerAnimation();
+    }
 
+    public void setAnimation() {
+        setConditionAnimation();
+        setHeaderAnimation();
+
+    }
+
+    public void setConditionAnimation() {
+        Utils.setVisibility(View.INVISIBLE, condition, wIcon);
+        Animation slideInRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
+        condition.startAnimation(slideInRight);
+        wIcon.startAnimation(slideInRight);
+        Utils.setVisibility(View.VISIBLE, condition, wIcon);
+    }
+
+    public void setHeaderAnimation() {
+        if (recyclerView == null) {
+            return;
+        }
+        ConstraintLayout container = (ConstraintLayout) recyclerView.findViewById(R.id.main_layout);
+        if (container == null) {
+            return;
+        }
+        Log.v(LOG, "Set header Animation");
+        Utils.setVisibility(View.INVISIBLE, container);
+        Animation mSlideInBottom = AnimationUtils.loadAnimation(this, R.anim.slide_in_bottom);
+        container.startAnimation(mSlideInBottom);
+        Utils.setVisibility(View.VISIBLE, container);
     }
 
     public boolean isAllWeatherReceived() {

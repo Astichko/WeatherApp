@@ -30,25 +30,25 @@ public class DataProvider {
     }
 
     public static void setCurrentWeather(CurrentWeather currentWeather) {
-        DataProvider.currentWeather = currentWeather;
-    }
+                DataProvider.currentWeather = currentWeather;
+            }
 
-    public static CurrentWeather getCurrentWeather() {
-        return currentWeather;
-    }
+        public static CurrentWeather getCurrentWeather() {
+            return currentWeather;
+        }
 
-    public static HoursForecast getHoursForecast() {
-        return hoursForecast;
-    }
+        public static HoursForecast getHoursForecast() {
+            return hoursForecast;
+        }
 
-    public static void setHoursForecast(HoursForecast hoursForecast) {
-        DataProvider.hoursForecast = hoursForecast;
-    }
+        public static void setHoursForecast(HoursForecast hoursForecast) {
+            DataProvider.hoursForecast = hoursForecast;
+        }
 
-    public static <T> T getApi(Class<T> type) {
-        if (retrofit == null) {
-            RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
-            Gson gson = new GsonBuilder().create();
+        public static <T> T getApi(Class<T> type) {
+            if (retrofit == null) {
+                RxJavaCallAdapterFactory rxAdapter = RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
+                Gson gson = new GsonBuilder().create();
 
             retrofit = new Retrofit.Builder()
                     .addCallAdapterFactory(rxAdapter)

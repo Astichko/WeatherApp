@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:visibility="gone"
+        android:id="@+id/container_item_header"
+        layout="@layout/item_header" />
+
+    <include
+        android:visibility="gone"
+        android:id="@+id/container_item_forecast"
+        layout="@layout/item_forecast"/>
+    <include
+        android:visibility="gone"
+        android:id="@+id/container_item_map"
+        layout="@layout/item_map"/>
+    <include
+        android:visibility="gone"
+        android:id="@+id/container_item_wind"
+        layout="@layout/item_wind_pressure"/>
+
+</LinearLayout>

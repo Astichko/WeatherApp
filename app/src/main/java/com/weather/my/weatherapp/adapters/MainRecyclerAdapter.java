@@ -2,11 +2,10 @@ package com.weather.my.weatherapp.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.transitionseverywhere.Slide;
-import com.transitionseverywhere.Transition;
-import com.transitionseverywhere.TransitionManager;
 import com.weather.my.weatherapp.R;
 import com.weather.my.weatherapp.holders.ViewHolder;
 import com.weather.my.weatherapp.models.current_weather.CurrentWeather;
@@ -28,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import static com.weather.my.weatherapp.utils.Constants.ANIMATION_DURATION;
 import static com.weather.my.weatherapp.utils.Constants.DEG;
 import static com.weather.my.weatherapp.utils.Constants.FONT_PATH;
 import static com.weather.my.weatherapp.utils.Constants.FORECAST;
@@ -46,10 +41,10 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     private CurrentWeather currentWeather;
     private DaysForecast daysForecast;
     private HoursForecastAdapter hoursForecastAdapter;
-    private final String LOG = "Recycler";
+    private final String LOG = "mRecycler";
     private boolean isAnimationRun = false;
 
-    public MainRecyclerAdapter(Context context, FragmentManager fragmentManager) {
+    public MainRecyclerAdapter(Context context) {
         this.context = context;
         currentWeather = DataProvider.getCurrentWeather();
         daysForecast = DataProvider.getDaysForecast();
@@ -143,7 +138,6 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             setAnimation(holder);
             isAnimationRun = true;
         }
-        Utils.setVisibility(View.VISIBLE, holder.itemHeaderContainer);
         if (currentWeather == null) {
             return;
         }
@@ -162,9 +156,11 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     private void setAnimation(ViewHolder holder) {
-        Transition recyclerAnimation = new Slide(Gravity.BOTTOM);
-        recyclerAnimation.setDuration(ANIMATION_DURATION);
-        TransitionManager.beginDelayedTransition(holder.itemHeaderContainer, recyclerAnimation);
+        Log.v(LOG, "Set header Animation in Recycler");
+        Utils.setVisibility(View.INVISIBLE, holder.itemHeaderContainer);
+        Animation mSlideInBottom = AnimationUtils.loadAnimation(context, R.anim.slide_in_bottom);
+        holder.itemHeaderContainer.startAnimation(mSlideInBottom);
+        Utils.setVisibility(View.VISIBLE, holder.itemHeaderContainer);
     }
 
     private void createHoursRecycler(ViewHolder holder) {
@@ -190,7 +186,6 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
             holder.forecastDayData.get(i)[2].setText(f.format(c.getTime()));
             c.add(Calendar.DATE, 1);
         }
-
     }
 
     @Override
